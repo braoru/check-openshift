@@ -3,7 +3,7 @@
 
 # Copyright (C) 2013:
 #     Sébastien Pasche, sebastien.pasche@leshop.ch
-#     Mikael Bugnon, mikael.bugnon@leshop.ch
+#     Benoit Chalut, benoit.chalut@leshop.ch
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
