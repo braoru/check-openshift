@@ -251,10 +251,10 @@ parser.add_option('--openshift-district-name',
                   dest="openshift_district",
                   help='openshift district to query')
 parser.add_option('-w', '--warning',
-                  dest="warning", type="int",
+                  dest="warning", type="int",default=None,
                   help='Warning value for number of unresponsive nodes. Default : 2')
 parser.add_option('-c', '--critical',
-                  dest="critical", type="int",
+                  dest="critical", type="int",default=None,
                   help='Critical value for number of unresponsive nodes. Default : 3')
 
 #generic
@@ -328,6 +328,8 @@ if __name__ == '__main__':
         raise Exception("You must specify a openshift district name")
 
     openshift_district_name = opts.openshift_district
+
+
 
     # Try to get numeic warning/critical values
     s_warning = opts.warning or DEFAULT_WARNING
@@ -451,6 +453,7 @@ if __name__ == '__main__':
         )
 
         print(output)
+        
 
     except Exception as e:
         if debug:
@@ -458,8 +461,13 @@ if __name__ == '__main__':
             the_type, value, tb = sys.exc_info()
             traceback.print_tb(tb)
         print("Error: {m}".format(m=e))
+        sys.exit(2)
 
     finally:
         if mongodb_client is not None:
             MongoDBHelper.close_mongodb_connection(mongodb_client)
-        sys.exit(2)
+        if status == "Critical":
+            sys.exit(2)
+        if status == "Warning":
+            sys.exit(1)
+        sys.exit(0)
